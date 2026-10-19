@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>아 엄마 이것도 다 실력이야!</title>
+<style>
+:root{--ink:#222;--muted:#666;--bg:#f7f7f5;--accent:#ff6547;--blue:#d8eafb}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}button{font:inherit;cursor:pointer}button:focus-visible,.room:focus-visible{outline:3px solid #ff6547;outline-offset:3px}.shell{width:min(1080px,calc(100% - 36px));margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:24px 0 16px;border-bottom:2px solid #222}.logo{font-size:clamp(20px,3vw,34px);font-weight:900;letter-spacing:-1.7px}.tag{color:var(--muted);font-size:13px}.smallbtn{background:#fff;border:2px solid #222;padding:10px 16px;border-radius:4px}.page{padding:28px 0 60px}.lead{font-size:clamp(20px,3vw,31px);line-height:1.55;font-weight:800;margin:0 0 12px}.sub{color:var(--muted);line-height:1.7;margin:0 0 28px}.panel{background:white;border:2px solid var(--ink);border-radius:6px;padding:24px;box-shadow:5px 5px 0 #ddd}.view{display:none}.view.active{display:block}.floor{height:460px;position:relative;border:4px solid #333;background:#eee;overflow:hidden;margin:16px auto;max-width:760px}.floor:before{content:'';position:absolute;left:0;top:41%;width:52%;height:17%;background:#fff;border-top:3px solid #555;border-bottom:3px solid #555}.room{position:absolute;border:3px solid #222;display:flex;justify-content:center;align-items:center;flex-direction:column;gap:10px;text-align:center;background:#fafafa;transition:background .15s}.room span{font-size:14px;font-weight:800}.room small{font-size:12px;color:#666}.room:hover{background:#f9d9d2}.bedroom{left:7%;bottom:8%;width:38%;height:40%}.kitchen{left:7%;top:7%;width:38%;height:28%}.living{right:7%;top:7%;width:42%;height:42%}.bath{right:7%;bottom:8%;width:26%;height:31%}.bedicon{width:100px;height:55px;border:3px solid #333;border-radius:4px;position:relative;background:#fff}.bedicon:before{content:'';position:absolute;left:7px;top:7px;width:25px;height:38px;border:2px solid #333;background:#eee}.round{width:74px;height:74px;border:3px solid #333;border-radius:50%;background:white}.rect{width:94px;height:56px;border:3px solid #333;background:white}.introGrid{display:grid;grid-template-columns:1fr 1.3fr;gap:30px;align-items:center}.quote{padding:16px;border:2px solid #333;background:#fff;min-height:70px;font-weight:700;line-height:1.6}.scene{height:320px;border:3px solid #222;background:#f0f0f0;position:relative;overflow:hidden}.window{position:absolute;left:10%;top:12%;width:26%;height:32%;border:4px solid #444;background:#e6f1fb}.desk{position:absolute;right:8%;bottom:14%;width:36%;height:14%;background:#ddd;border:3px solid #333}.desk:after{content:'';position:absolute;height:65px;width:8px;background:#333;top:100%;left:15%}.chair{position:absolute;bottom:14%;left:23%;width:94px;height:90px;border:7px solid #333;border-radius:12px;background:white;transform:rotate(-7deg)}.btn{background:#222;color:white;border:2px solid #222;padding:13px 20px;font-weight:800;border-radius:4px}.btn:hover{background:#444}.btn.secondary{background:white;color:#222}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.gameHeading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.stat{font-weight:800;background:#fff;border:2px solid #333;padding:10px 14px}.gameArea{height:390px;position:relative;overflow:hidden;background:#ebf3fb;border:3px solid #333;touch-action:none;user-select:none}.gameArea:after{content:'';position:absolute;bottom:34px;left:0;right:0;border-top:3px solid #444;pointer-events:none}.avatar{position:absolute;left:calc(50% - 24px);bottom:36px;width:48px;height:82px;z-index:4}.head{width:42px;height:42px;background:#ffd9ba;border:3px solid #333;border-radius:50%;margin:auto}.body{height:40px;width:48px;border:3px solid #333;background:#ff856f;border-radius:6px}.falling{position:absolute;z-index:3;border:3px solid #333;display:grid;place-items:center;font-size:12px;font-weight:800;background:#fff;white-space:nowrap}.falling.bad{background:#ffd4cf}.falling.good{background:#d9f6d1}.result{display:none;position:absolute;inset:0;background:#ffffffeb;z-index:10;align-items:center;justify-content:center;text-align:center;flex-direction:column;padding:20px}.result.show{display:flex}.result h2{font-size:32px;margin:5px}.instructions{background:#fff;border:2px dashed #888;padding:14px;line-height:1.6;margin:15px 0}.gameBtns{display:flex;gap:12px;justify-content:center;margin-top:12px}.gameBtns button{min-width:100px}.hint{font-size:13px;color:#666}.hidden{display:none!important}@media(max-width:680px){.introGrid{grid-template-columns:1fr}.top .tag{display:none}.floor{height:390px}.panel{padding:15px}.gameArea{height:370px}.room span{font-size:12px}.room small{font-size:10px}.logo{font-size:23px}.scene{height:245px}}
+
+/* 방 안에 둥둥 떠다니는 잔소리 말풍선 */
+.roomScene{height:510px;position:relative;overflow:hidden;border:3px solid #222;background:#f2f2f2;isolation:isolate}
+.roomScene .window{left:8%;top:10%;width:23%;height:30%}
+.roomScene .desk{right:10%;bottom:16%;width:30%;height:12%}
+.roomScene .chair{left:24%;bottom:16%;width:90px;height:85px}
+.roomScene .simpleBed{position:absolute;left:8%;bottom:10%;height:66px;width:30%;border:3px solid #555;background:#ddd}
+.roomScene .simpleBed:after{content:'';position:absolute;left:8%;top:10px;width:33%;height:38px;border:2px solid #777;background:#fff}
+.roomScene .roomCaption{position:absolute;bottom:14px;right:18px;color:#888;font-size:13px;pointer-events:none}
+.bubble{--rotation:0deg;position:absolute;z-index:3;display:flex;align-items:center;justify-content:center;text-align:center;min-width:180px;max-width:280px;min-height:88px;padding:22px 24px;border:3px solid #222;border-radius:45% 48% 47% 43% / 48% 43% 50% 46%;background:white;color:#222;font-weight:850;font-size:clamp(15px,2vw,21px);line-height:1.4;box-shadow:5px 5px 0 #ddd;animation:bubbleFloat var(--duration,4s) ease-in-out infinite alternate;animation-delay:var(--delay,0s);transition:background .2s,box-shadow .2s;cursor:pointer}
+.bubble:after{content:'';position:absolute;bottom:-18px;left:24%;width:22px;height:22px;background:#fff;border-right:3px solid #222;border-bottom:3px solid #222;transform:rotate(42deg);z-index:-1}
+.bubble:hover,.bubble:focus-visible{background:#e4f2ff;box-shadow:7px 7px 0 #b4cde0;animation-play-state:paused}
+.bubble:hover:after{background:#e4f2ff}
+
+.bubble.clothesBubble{top:57%;left:50%;--duration:5.4s;--delay:-3.1s}
+.bubble:active{scale:.97}
+@keyframes bubbleFloat{0%{transform:translate(-9px,9px) rotate(-3deg)}50%{transform:translate(12px,-12px) rotate(2deg)}100%{transform:translate(-4px,-24px) rotate(-2deg)}}
+@media(max-width:680px){.roomScene{height:510px}.bubble{min-width:0;max-width:220px;min-height:84px;padding:17px 16px;font-size:16px}.bubble.clothesBubble{top:56%;left:33%}.roomScene .desk{right:8%;width:33%}}
+@media(prefers-reduced-motion:reduce){.bubble{animation:none}}
+
+
+
+/* Bedroom layout: a simple illustrated room, with each nag next to its object */
+.roomScene{height:550px;background:linear-gradient(#f7f4ef 0 72%,#e5ddcf 72% 100%);border:3px solid #333}
+.roomScene:before{content:'';position:absolute;left:0;right:0;top:72%;border-top:3px solid #b2a99d}
+.roomScene .window{left:8%;top:9%;width:23%;height:31%;background:linear-gradient(120deg,#dceefa,#b4d6ef);border:7px solid #fff;outline:3px solid #555;box-shadow:5px 5px 0 #d6d0c5}
+.roomScene .window:before{content:'';position:absolute;top:0;bottom:0;left:48%;border-left:4px solid #fff}
+.roomScene .window:after{content:'';position:absolute;left:0;right:0;top:48%;border-top:4px solid #fff}
+.roomScene .simpleBed{left:7%;bottom:11%;width:44%;height:112px;border:4px solid #403c3b;background:#b1cae3;border-radius:16px 16px 6px 6px;box-shadow:0 16px 0 -8px #615954;transform:skewY(-4deg)}
+.roomScene .simpleBed:before{content:'';position:absolute;left:-8px;top:12px;height:94px;width:22px;background:#8e7c70;border:3px solid #333;border-radius:6px}
+.roomScene .simpleBed:after{left:10%;top:12px;width:27%;height:40px;border:3px solid #888;border-radius:12px;background:#fff}
+.roomScene .desk{right:6%;bottom:20%;width:33%;height:16px;background:#b79a80;border:3px solid #4b403a;border-radius:3px}
+.roomScene .desk:before{content:'';position:absolute;top:-80px;right:12%;width:60px;height:76px;border:4px solid #555;border-radius:5px;background:#e9e9e9;box-shadow:0 5px 0 #999}
+.roomScene .desk:after{height:115px;width:10px;left:12%;background:#6d5f54;box-shadow:190px 0 0 #6d5f54}
+.roomScene .chair{left:auto;right:21%;bottom:10%;width:91px;height:86px;border:5px solid #5c544f;background:#f4e0ba;border-radius:12px 12px 8px 8px;transform:rotate(-5deg);box-shadow:0 14px 0 -6px #766e65}
+.roomScene .chair:before{content:'';position:absolute;top:60px;left:13px;height:76px;width:8px;background:#635e58;box-shadow:50px 0 0 #635e58}
+.roomScene .chair:after{content:'';position:absolute;left:4px;bottom:-11px;width:68px;height:21px;border:3px solid #5c544f;border-radius:9px;background:#ead0a9}
+.roomScene .rug{position:absolute;bottom:5%;left:9%;width:46%;height:35px;background:#d2c5b4;border:2px solid #b6a999;border-radius:50%}
+.roomScene .dresser{position:absolute;top:42%;right:7%;width:18%;height:83px;border:3px solid #514941;background:#d7c0a5;border-radius:4px}
+.roomScene .dresser:after{content:'—  —';display:block;text-align:center;line-height:38px;white-space:pre;letter-spacing:8px;color:#66584a}
+.roomScene .roomCaption{bottom:12px;right:15px;color:#675e56}
+
+.bubble.clothesBubble{left:auto;right:5%;top:33%;--duration:5.1s;max-width:260px}
+.bubble{z-index:6;font-size:18px;padding:19px 21px;min-height:88px}
+@media(max-width:680px){.roomScene{height:490px}.roomScene .simpleBed{width:48%;height:90px;bottom:13%}.roomScene .chair{right:16%;bottom:11%;transform:scale(.75) rotate(-5deg);transform-origin:bottom right}.roomScene .desk{width:37%;bottom:22%}.roomScene .desk:before{right:8%;width:45px;height:54px;top:-59px}.roomScene .dresser{top:43%;height:60px}.bubble{font-size:13px;min-height:70px;max-width:170px;padding:12px}.bubble.clothesBubble{right:3%;top:31%}}
+/* Stack-of-clothes minigame */
+.stackStage{position:absolute;inset:0;background:linear-gradient(#f8f7f3 0 82%,#dfd8cb 82% 100%);overflow:hidden;touch-action:manipulation}
+.stackStage .ground{position:absolute;top:82%;width:100%;height:3px;background:#615d58}
+.stackChair{position:absolute;width:126px;height:125px;transform:translateX(-50%);z-index:2;pointer-events:none}
+.stackChair .backrest{position:absolute;bottom:53px;left:0;width:21px;height:85px;background:#beaa91;border:4px solid #4c4640;border-radius:7px}
+.stackChair .seat{position:absolute;bottom:43px;left:0;width:126px;height:19px;background:#c7aa87;border:4px solid #4c4640;border-radius:5px}
+.stackChair .leg{position:absolute;bottom:0;width:9px;height:45px;background:#4c4640}.stackChair .leg.one{left:15px}.stackChair .leg.two{right:15px}
+.stackGarment{position:absolute;height:19px;border:2px solid #3c4248;border-radius:8px 10px 6px 8px;box-shadow:0 2px 0 #0002;z-index:4;transform-origin:center;pointer-events:none}
+.stackGarment:after{content:'';position:absolute;left:14%;top:5px;right:14%;border-top:2px dashed #ffffffa8}
+.stackGarment.active{z-index:5;box-shadow:0 4px 0 #0002}
+.stackTarget{position:absolute;height:2px;border-top:2px dashed #766c60;pointer-events:none}
+.stackMessage{position:absolute;top:16px;left:0;right:0;text-align:center;font-size:14px;font-weight:800;color:#51483e;pointer-events:none}
+.stackDrop{display:block;margin:0 auto;min-width:180px}
+
+/* Kitchen · interlocking dishes */
+.kitchenScene{height:450px;position:relative;overflow:hidden;border:3px solid #222;background:linear-gradient(#f4f3ef 0 66%,#e6dfd6 66%)}
+.kitchenWall{position:absolute;top:12%;left:8%;width:33%;height:28%;border:5px solid #777;background:#fff;box-shadow:3px 4px #d1d1d1}.kitchenWall:before{content:'';position:absolute;left:49%;top:0;bottom:0;border-left:3px solid #aaa}.kitchenCounter{position:absolute;left:6%;right:6%;bottom:19%;height:17%;background:#d1c1ad;border:3px solid #333}.kitchenCounter:before{content:'';position:absolute;left:0;right:0;top:-13px;height:14px;background:#fafafa;border:3px solid #333}.kitchenSink{position:absolute;left:12%;bottom:33%;width:30%;height:30px;background:#c1d4df;border:3px solid #444;border-radius:0 0 45% 45%}.kitchenTap{position:absolute;left:22%;bottom:40%;width:20px;height:42px;border:6px solid #777;border-bottom:0;border-radius:15px 15px 0 0}.kitchenShelves{position:absolute;right:9%;top:12%;width:36%;height:28%;border:4px solid #555;background:#efebe3}.kitchenShelves:before{content:'';position:absolute;left:0;right:0;top:50%;border-top:5px solid #777}.kitchenPlates{position:absolute;right:13%;top:22%;font-size:38px}.kitchenBubble{top:43%;left:39%;--duration:4.8s;max-width:300px}
+.kitchenPuzzle{position:absolute;inset:0;z-index:5;background:#faf7f1;overflow:auto;padding:12px 14px;display:flex;flex-direction:column;align-items:center;gap:9px}.kitchenPuzzle .kpIntro{font-size:13px;font-weight:750;text-align:center}.kpLayout{display:flex;justify-content:center;align-items:start;gap:15px;width:100%}.kpBoard{--cell:39px;display:grid;grid-template-columns:repeat(6,var(--cell));grid-template-rows:repeat(6,var(--cell));border:3px solid #333;background:#ddd;flex-shrink:0;touch-action:none}.kpCell{height:var(--cell);width:var(--cell);border:1px solid #b7b7b7;background:#fff;display:grid;place-items:center;position:relative;font-size:19px;user-select:none;cursor:pointer}.kpCell.full{border:1px solid #fff9;cursor:pointer}.kpCell.preview{background:#d2e8fa!important}.kpCell.invalid{background:#f5aeae!important}.kpCell .dishGlyph{color:#222;line-height:1;pointer-events:none}.kpTray{flex:1;display:flex;flex-wrap:wrap;gap:6px;align-content:start;max-height:259px;overflow-y:auto}.kpPiece{border:2px solid #444;background:white;padding:6px;min-width:65px;cursor:grab;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:bold;touch-action:none}.kpPiece.selected{outline:3px solid #ff6547;outline-offset:-1px}.kpPiece.placed{opacity:.38}.kpPiece:active{cursor:grabbing}.kpMini{display:grid;grid-template-columns:repeat(4,10px);grid-template-rows:repeat(4,10px)}.kpMiniCell{height:10px;width:10px}.kpMiniCell.filled{border:1px solid #777}.kpControls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.kpControls button{font-size:12px;padding:8px 11px}.kpMsg{font-size:12px;min-height:16px;text-align:center}.kpPieceLabel{white-space:nowrap}.kpCell.placedOrigin{box-shadow:inset 0 0 0 2px #555}
+@media(max-width:620px){.kitchenBubble{left:25%;top:44%}.kpBoard{--cell:clamp(29px,7vw,38px)}.kpLayout{flex-direction:column;align-items:center;gap:8px}.kpTray{max-height:92px;justify-content:center;overflow-y:auto}.kpPiece{padding:4px;min-width:55px}.kpMini{display:none}.kitchenPuzzle{gap:6px;padding:9px}.kpIntro{font-size:12px!important}}
+
+/* Real dish organization: tabletop silhouettes instead of a cell-based puzzle. */
+.realKitchen{position:absolute;inset:0;padding:10px 15px;background:#f4f1eb;overflow-y:auto;touch-action:pan-y;color:#333}
+.realKitchenTitle{font-size:14px;font-weight:850;text-align:center;padding:2px 0 6px}
+.realKitchenLayout{display:grid;grid-template-columns:minmax(0,2.4fr) minmax(155px,1fr);gap:12px;align-items:center}
+.shelfWrap{min-width:0}.shelfWrap svg{display:block;width:100%;background:#dedcd5;border:2px solid #888;border-radius:12px;touch-action:none;cursor:crosshair}
+.dish-svg{cursor:grab;filter:drop-shadow(1px 3px 1px #0003)}.rackCaption{text-align:center;font-size:11px;color:#676767;margin-top:3px}
+.dishSidebar{min-width:0}.dishSideTitle{font-size:12px;font-weight:800;margin-bottom:7px}
+.dishTray{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.realDishButton{border:1.5px solid #888;background:#fff;border-radius:7px;padding:3px 1px;color:#333;min-width:0;cursor:pointer}
+.realDishButton svg{display:block;width:100%;height:42px}.realDishButton span{display:block;font-size:10px;white-space:nowrap;letter-spacing:-.4px}.realDishButton.selected{border:3px solid #ef6c55;background:#fff6ef}.realDishButton.placed{opacity:.38}
+.realKitchen .kpControls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:6px 0}.realKitchen .kpControls button{padding:5px 9px;font-size:11px}
+.realKitchen .kpMsg{font-size:12px;text-align:center;font-weight:700;min-height:22px}
+@media(max-width:650px){.realKitchen{padding:8px}.realKitchenLayout{display:block}.shelfWrap svg{max-height:205px}.dishTray{grid-template-columns:repeat(8,1fr)}.realDishButton svg{height:28px}.realDishButton span{font-size:8px}.realKitchen .kpControls button{font-size:10px;padding:4px}.dishSideTitle{margin:4px 0}}
+
+/* Living room and bathroom: simple prototype geometry */
+.extraScene{height:450px;position:relative;overflow:hidden;border:3px solid #282828}.livingScene{background:linear-gradient(#f2f0e9 0 71%,#dfd4c4 71%)}.bathScene{background:linear-gradient(#dce9e9 0 76%,#c0cfd0 76%)}.livingWindow{position:absolute;top:9%;right:12%;width:24%;height:28%;background:#d9ebef;border:8px solid #d7d4cc;box-shadow:inset 0 0 0 3px #99b5c3}.livingWindow:after{content:'';position:absolute;left:48%;top:0;height:100%;border-left:5px solid #d7d4cc}.wallFrame{position:absolute;left:8%;top:12%;height:90px;width:110px;border:9px solid #ac9d8d;background:#ece0ce}.livingSofa{position:absolute;left:16%;bottom:15%;width:62%;height:120px;background:#c3b5a4;border:5px solid #5d554d;border-radius:24px 24px 10px 10px}.sofaArm{position:absolute;bottom:-8px;width:45px;height:92px;background:#b4a493;border:4px solid #5d554d;border-radius:19px}.sofaArm.left{left:-28px}.sofaArm.right{right:-28px}.sofaPillow{position:absolute;right:14%;top:12px;width:86px;height:65px;transform:rotate(13deg);background:#e0d7bd;border:2px solid #89806d;border-radius:9px}.lyingPerson{position:absolute;left:30%;bottom:25%;height:45px;width:39%;z-index:2}.lyingHead{position:absolute;left:0;top:-3px;width:55px;height:55px;border-radius:50%;background:#e7c2a8;border:3px solid #444}.lyingBody{position:absolute;left:49px;top:13px;width:76%;height:37px;border-radius:20px;background:#8fa7b1;border:3px solid #444}.scenePhone{position:absolute;left:38%;bottom:43%;width:28px;height:55px;background:#39434c;border:4px solid #1d232b;border-radius:7px;transform:rotate(-13deg);z-index:3}.livingTable{position:absolute;right:6%;bottom:5%;width:24%;height:19px;background:#99846d;border:3px solid #5d5148;border-radius:9px}.livingTable:after{content:'';position:absolute;left:14px;top:17px;width:7px;height:35px;background:#5d5148;box-shadow:130px 0 #5d5148}.extraBubble{position:absolute}.livingBubble{left:8%;top:35%;--duration:4.7s}.bathMirror{position:absolute;left:20%;top:8%;width:49%;height:53%;border:12px solid #f8f8f8;background:#a7b9c2;box-shadow:0 0 0 3px #778991;overflow:hidden}.mirrorFog{position:absolute;inset:0;background:linear-gradient(130deg,#fff9,#fff3,#fff8)}.bathSink{position:absolute;left:25%;bottom:15%;width:40%;height:85px;background:#f7f7f5;border:5px solid #65777e;border-radius:5px 5px 55px 55px}.bathTap{position:absolute;left:44%;bottom:35%;width:32px;height:49px;border:9px solid #8b999c;border-bottom:0;border-radius:20px 20px 0 0}.bathShelf{position:absolute;right:6%;bottom:26%;width:20%;height:10px;background:#8a9da1}.bathTowel{position:absolute;left:5%;top:38%;width:13%;height:95px;background:#e6c5b6;border:3px solid #aa978a;border-radius:6px}.bathBubble{right:5%;top:22%;--duration:5.2s}
+.phoneStage,.mirrorStage{position:absolute;inset:0;background:#f2f0eb;overflow:hidden}.phoneStage{touch-action:none;background:linear-gradient(#efebe4 0 73%,#ddd0c1 73%)}.phoneStatus{position:absolute;top:12px;left:0;right:0;text-align:center;font-size:15px;font-weight:900;z-index:4}.phoneInstruction{position:absolute;left:0;right:0;top:44px;text-align:center;color:#5b5853;font-size:13px;z-index:4}.phoneDanger{position:absolute;top:72px;left:0;right:0;text-align:center;font-size:12px;font-weight:800;color:#ca4332;opacity:0;transition:opacity .12s;z-index:4}.phoneScene{position:absolute;inset:0}.phonePillow{position:absolute;left:50%;bottom:16%;width:230px;height:72px;transform:translateX(-50%);border:4px solid #555;background:#f7f7f5;border-radius:22px;box-shadow:0 7px 0 #c1b5a5}.phoneBody{position:absolute;left:50%;bottom:7%;width:310px;height:210px;transform:translateX(-50%);background:#90abc8;border:4px solid #4c5966;border-radius:28px 28px 16px 16px}.phoneBody:before,.phoneBody:after{content:'';position:absolute;bottom:0;width:42px;height:102px;background:#e4b996;border:4px solid #5f4f46;border-top:none;border-radius:0 0 18px 18px}.phoneBody:before{left:52px;transform:rotate(8deg)}.phoneBody:after{right:52px;transform:rotate(-8deg)}.phoneFace{position:absolute;left:50%;bottom:19%;width:190px;height:138px;transform:translateX(-50%);border-radius:50% 50% 46% 46%;border:4px solid #554c46;background:#e9c5aa;box-shadow:0 8px 0 #d8b399}.phoneFace:before{content:'';position:absolute;left:50%;top:60px;transform:translateX(-50%);width:34px;height:20px;border:4px solid #6b584b;border-top:none;border-radius:0 0 26px 26px}.phoneEye{position:absolute;top:50px;width:26px;height:16px;border-top:4px solid #5b4f46;border-radius:50%}.phoneEye.left{left:44px}.phoneEye.right{right:44px}.phoneNose{position:absolute;left:50%;top:58px;transform:translateX(-50%);width:14px;height:26px;border:4px solid #7a6558;border-left:none;border-top:none;border-radius:0 0 12px 0}.phoneImpact{position:absolute;left:50%;top:19px;transform:translateX(-50%);width:78px;height:26px;border:3px dashed #c95f4c;border-radius:50%;opacity:.45}.phoneHand{position:absolute;left:50%;bottom:28%;height:118px;width:18px;background:#e1b595;border:4px solid #5f4f46;border-bottom:none;border-radius:16px 16px 4px 4px;transform-origin:bottom center;z-index:2}.phoneDevice{position:absolute;width:76px;height:136px;background:#404b55;border:5px solid #24272c;border-radius:16px;left:50%;top:18%;transform-origin:50% 100%;box-shadow:0 18px 24px #0000002b;display:grid;place-items:center;color:white;font-size:13px;pointer-events:none;z-index:3}.phoneDevice:before{content:'';position:absolute;inset:8px;background:linear-gradient(#9bbad3,#bfd6ea);border-radius:10px}.phoneDevice:after{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:26px;height:4px;background:#1d2126;border-radius:4px}.phoneDevice span{z-index:1;font-size:16px}.phoneShadow{position:absolute;left:50%;top:45%;width:88px;height:26px;transform:translateX(-50%);background:#0000001a;border-radius:50%;filter:blur(2px);z-index:1}.phoneMeter{position:absolute;bottom:14px;left:10%;right:10%;height:13px;border:2px solid #555;border-radius:10px;background:linear-gradient(90deg,#e58c80 0 24%,#a9cdb2 24% 76%,#e58c80 76%);z-index:4}.phoneMarker{position:absolute;left:50%;top:-6px;width:9px;height:23px;background:#2c3134;border-radius:3px}.mirrorStage{display:flex;align-items:center;flex-direction:column;padding:9px;gap:5px}.mirrorInfo{font-size:13px;font-weight:700;text-align:center}.mirrorCanvas{height:min(78%,320px);width:min(90%,460px);border:12px solid #ddd5ca;background:#b9cbd0;cursor:crosshair;touch-action:none;box-shadow:0 6px 0 #aaa59e}.mirrorTools{font-size:12px;text-align:center;color:#666}
+@media(max-width:650px){.extraScene{height:400px}.extraBubble{max-width:180px}.livingBubble{top:38%;left:4%}.bathBubble{right:2%;top:25%}.livingSofa{left:18%;width:66%}.bathMirror{left:16%;width:57%}.mirrorCanvas{height:74%;width:96%}}
+
+/* Added outer navigation only. Inner scenes and mini-game graphics come from the uploaded file. */
+:root{--bookgreen:#a8c934;--bookcream:#f9ede2;--bookpink:#f8eff3}
+html,body{min-height:100%;margin:0}
+body{background:var(--bookgreen)}
+.shell{height:100dvh;display:flex;flex-direction:column;width:min(1080px,calc(100% - 32px))}
+.top{flex:0 0 auto;padding:12px 0 9px;border-bottom:0}
+.top .logo{font-size:clamp(16px,2vw,23px);letter-spacing:0}
+.top .smallbtn{background:#f7ee56;border:0;border-radius:0;padding:7px 14px}
+.page{flex:1;min-height:0;padding:0 0 8px}
+.view{height:100%;min-height:0}
+.view.active{display:flex;flex-direction:column;align-items:stretch}
+#landingView,#floorView{justify-content:center;align-items:center}
+.landing-stage{position:relative;width:min(100%,800px);height:100%;display:flex;align-items:center;justify-content:center}
+.landing-title{position:absolute;top:4%;left:50%;transform:translateX(-50%);background:var(--bookpink);border-radius:53% 47% 55% 45%;width:min(380px,75vw);height:min(18vh,138px);display:grid;place-items:center;text-align:center;line-height:1.28;font-size:clamp(20px,3vw,32px);z-index:3}
+.landing-prompt{position:absolute;top:25%;left:50%;transform:translateX(-50%);white-space:nowrap;letter-spacing:2px;font-size:clamp(14px,1.7vw,18px);z-index:3}
+.house-drawing{position:relative;height:min(65vh,560px);width:min(65vh,560px);max-width:90vw;margin-top:15vh}
+.house-roof{position:absolute;z-index:1;left:10%;width:80%;top:4%;height:34%;background:#ed6954;clip-path:polygon(0 100%,50% 0,100% 100%)}
+.house-front{position:absolute;bottom:0;left:12%;width:76%;height:63%;background:var(--bookcream)}
+.house-window{position:absolute;top:19%;width:24%;height:33%;background:#53b7e8}
+.house-window.one{left:15%}.house-window.two{right:15%}
+.front-door{position:absolute;bottom:0;left:41%;height:38%;width:18%;background:#c99587;border:2px solid #111;border-bottom:0;cursor:pointer;transition:filter .15s,transform .15s}
+.front-door:hover,.front-door:focus-visible{filter:brightness(1.17);transform:perspective(160px) rotateY(-12deg)}
+.knob{position:absolute;right:12%;top:53%;width:7px;height:7px;border-radius:50%;background:#111}
+.floorplan{width:min(92vw,930px);height:min(79vh,680px);background:var(--bookpink);padding:22px;display:flex;flex-direction:column;gap:12px}
+.floorplan-caption{font-size:clamp(17px,2vw,22px);font-weight:700}
+.plan-canvas{position:relative;flex:1;min-height:0;margin:0 4%;background:#f4eddf;border:4px solid #161616}
+.plan-choice{position:absolute;z-index:2;border:3px solid #151515;background:#f6f0e4;cursor:pointer;text-align:left;color:#151515;padding:12px;transition:background .12s,box-shadow .12s, transform .12s}
+.plan-choice span{position:absolute;left:14px;top:12px;font-weight:800;font-size:clamp(15px,2vw,23px)}
+.plan-choice:hover,.plan-choice:focus-visible{background:#fff7a7;box-shadow:5px 5px 0 #171717;transform:translateY(-3px);outline:none}
+.plan-choice.kitchen{left:0;top:0;width:48%;height:34%}
+.plan-choice.living{right:0;top:0;width:39%;height:46%}
+.plan-choice.bedroom{left:0;bottom:0;width:58%;height:44%}
+.plan-choice.bath{right:0;bottom:0;width:26%;height:29%}
+.plan-corridor{position:absolute;left:49%;top:36%;width:20%;height:31%;background:#c6dce3;border:3px solid #151515;z-index:1}
+.plan-choice i{display:block;position:absolute;bottom:13%;right:12%;background:#5bc1eb;border:3px solid #151515}
+.sink-symbol{width:32%;height:34%}.sink-symbol:after{content:'';position:absolute;left:50%;top:0;height:100%;border-left:3px solid #151515}
+.sofa-symbol{width:40%;height:28%;background:#c99d87!important}.sofa-symbol:before{content:'';position:absolute;left:8%;right:8%;top:-18px;height:18px;background:#c99d87;border:3px solid #151515;border-bottom:0}
+.bed-symbol{width:40%;height:39%}.bed-symbol:before{content:'';position:absolute;left:9%;top:13%;width:32%;height:40%;background:#faf3df;border:2px solid #151515}
+.bath-symbol{width:48%;height:28%;border-radius:0 0 18px 18px}.bath-symbol:before{content:'';position:absolute;top:-16px;left:8px;height:16px;width:19px;border:3px solid #151515;border-bottom:0}
+/* Keep the original room geometry and game controls, but fit them into the viewport. */
+#roomView,#kitchenView,#livingView,#bathView,#gameView{width:100%;max-width:100%;margin:0 auto;overflow:hidden}
+#roomView .panel,#kitchenView .panel,#livingView .panel,#bathView .panel{min-height:0;flex:1;padding:12px;display:flex;max-height:calc(100% - 75px)}
+#roomView .panel>* ,#kitchenView .panel>*,#livingView .panel>*,#bathView .panel>*{width:100%;height:100%;min-height:0}
+#roomView .lead,#kitchenView .lead,#livingView .lead,#bathView .lead{margin:0 0 8px;font-size:20px}
+#roomView .actions,#kitchenView .actions,#livingView .actions,#bathView .actions{margin-top:8px}
+#gameView .gameArea{height:auto;flex:1;min-height:0}
+#gameView .gameHeading{margin-bottom:5px}
+#gameView .gameHeading h1{font-size:clamp(19px,2.3vw,26px);margin:0}
+#gameView .instructions{margin:7px 0;padding:7px 12px}
+#gameView .gameBtns{margin-top:6px}
+#gameView .actions{margin-top:7px}
+#gameView .actions .btn{padding:7px 12px}
+@media(max-height:600px){.landing-title{top:0;height:80px}.landing-prompt{top:22%}.house-drawing{height:min(67vh,440px);width:min(67vh,440px)}.top{padding:6px 0}.floorplan{height:80vh}.plan-choice i{transform:scale(.7);transform-origin:bottom right}}
+@media(max-width:620px){.floorplan{padding:12px}.plan-canvas{margin:0}.plan-choice span{left:7px;top:7px}.plan-choice{padding:7px}.top .logo{font-size:15px}.landing-prompt{top:23%}}
+
+/* Monochrome edition */
+html,body{background:#efefef!important}
+body{filter:grayscale(1)!important}
+.emptyBathroom{background:#f3f3f3!important;border:2px solid #222;position:relative}
+.emptyBathroom:after{content:' ';display:block}
+.phoneNewStage{background:#f3f3f3!important;position:absolute;inset:0;overflow:hidden;touch-action:none}
+.phoneNewStage .phoneArtwork{display:block;position:absolute;width:100%;height:100%;inset:0;pointer-events:none}
+.phoneNewStage .phoneStatus,.phoneNewStage .phoneInstruction{z-index:6!important}
+.phoneNewStage .phoneDanger{z-index:7!important;color:#111!important;background:white;padding:3px 9px}
+.phoneNewStage .phoneMeter{z-index:7!important}
+@media(max-width:680px){.phoneNewStage .phoneArtwork{width:100%;height:100%}}
+
+#gameLabel{display:none!important}
+#gameHelp:empty{display:none!important}
+.realKitchen .kpControls{gap:7px}
+.realKitchen .kpControls button{min-width:38px}
+.phoneNewStage .phoneArtwork{width:100%;height:100%;object-fit:contain}
+</style>
+</head>
+<body>
+<div class="shell"><header class="top"><button class="smallbtn" id="homeBtn">집으로</button></header>
+<main class="page"><section class="view active" id="landingView"><div class="landing-stage"><div class="landing-title">엄마 이것도<br/>다 실력이야!</div><div class="landing-prompt">open the door ↓</div><div class="house-drawing"><div class="house-roof"></div><div class="house-front"><div class="house-window one"></div><div class="house-window two"></div><button aria-label="집 안으로 들어가기" class="front-door" id="enterHouse"><span class="knob"></span></button></div></div></div></section><section class="view" id="floorView"><div aria-label="집 평면도" class="floorplan"><div class="floorplan-caption">어느 방으로 갈까?</div><div class="plan-canvas"><button aria-label="주방" class="plan-choice kitchen" data-room="kitchen"><span>주방</span><i class="sink-symbol"></i></button><button aria-label="거실" class="plan-choice living" data-room="living"><span>거실</span><i class="sofa-symbol"></i></button><button aria-label="내 방" class="plan-choice bedroom" data-room="bedroom"><span>내 방</span><i class="bed-symbol"></i></button><button aria-label="욕실" class="plan-choice bath" data-room="bath"><span>욕실</span><i class="bath-symbol"></i></button><div class="plan-corridor"></div></div></div></section>
+<section class="view" id="roomView"><p class="lead" id="roomTitle">내 방</p><div class="panel"><div aria-label="잔소리가 떠다니는 내 방" class="roomScene"><div aria-hidden="true" class="window"></div><div aria-hidden="true" class="rug"></div><div aria-hidden="true" class="simpleBed"></div><div aria-hidden="true" class="dresser"></div><div aria-hidden="true" class="desk"></div><div aria-hidden="true" class="chair"></div><button aria-label="옷 좀 의자에 쌓아두지 마! 옷 쌓기 게임 시작" class="bubble clothesBubble" data-game="clothes">“옷 좀 의자에<br/>쌓아두지 마!”</button></div></div><div class="actions"><button class="btn secondary" id="backHome">← 뒤로</button></div></section>
+<section class="view" id="kitchenView"><p class="lead">주방</p><div class="panel"><div class="kitchenScene"><div class="kitchenWall"></div><div class="kitchenShelves"></div><div aria-hidden="true" class="kitchenPlates">◯ ▱ ◯</div><div class="kitchenCounter"></div><div class="kitchenSink"></div><div class="kitchenTap"></div><button class="bubble kitchenBubble" data-game="kitchen">“밥 먹었으면<br/>설거지 좀 바로 해!”</button></div></div><div class="actions"><button class="btn secondary" id="kitchenBack">← 뒤로</button></div></section>
+<section class="view" id="livingView"><p class="lead">거실</p><div class="panel"><div class="extraScene livingScene"><div class="wallFrame"></div><div class="livingWindow"></div><div class="livingSofa"><div class="sofaArm left"></div><div class="sofaArm right"></div><div class="sofaPillow"></div></div><div class="lyingPerson"><div class="lyingHead"></div><div class="lyingBody"></div></div><div class="scenePhone"></div><div class="livingTable"></div><button class="bubble extraBubble livingBubble" data-game="phone">“맨날 누워서<br/>핸드폰만 하지!”</button></div></div><div class="actions"><button class="btn secondary" data-back-home="">← 뒤로</button></div></section>
+<section class="view" id="bathView"><p class="lead">욕실</p><div class="panel"><div class="emptyBathroom" aria-label="빈 욕실"></div></div><div class="actions"><button class="btn secondary" data-back-home="">← 뒤로</button></div></section>
+<section class="view" id="gameView"><div class="gameHeading"><div><h1 id="gameTitle">게임</h1></div><div class="stat" id="scoreBoard">점수 0</div></div><div class="instructions" id="gameHelp"></div><div class="gameArea" id="gameArea"><div class="avatar" id="avatar"><div class="head"></div><div class="body"></div></div><div class="result" id="result"><h2 id="resultTitle">끝!</h2><p id="resultText"></p><div class="actions"><button class="btn" id="retryBtn">다시 도전</button><button class="btn secondary" id="roomBtn">뒤로</button></div></div></div><div class="gameBtns"><button class="smallbtn" id="leftBtn">← 왼쪽</button><button class="smallbtn" id="rightBtn">오른쪽 →</button></div><div class="actions"><button class="btn secondary" id="exitGame">← 뒤로</button></div></section></main></div>
+<script>
+const $=s=>document.querySelector(s);
+const views=[...document.querySelectorAll('.view')];
+let currentGame=null,running=false,raf=0,lastTime=0,elapsed=0,gameDuration=30;
+let stackCount=0,stackPieces=[],stackX=0,stackDir=1,stackSpeed=125,stackWidth=104,stackY=0,stackMoving=false,stackTransition=null;
+const area=$('#gameArea'),result=$('#result');
+function stop(){running=false;cancelAnimationFrame(raf);if(stackTransition)clearTimeout(stackTransition);stackTransition=null;lastTime=0;area.querySelector('.stackStage,.kitchenPuzzle,.realKitchen,.phoneStage,.mirrorStage')?.remove();$('#avatar').classList.remove('hidden');$('#leftBtn').classList.remove('hidden');$('#rightBtn').classList.remove('hidden');$('#leftBtn').textContent='← 왼쪽';$('#rightBtn').textContent='오른쪽 →'}
+function show(id){stop();views.forEach(v=>v.classList.toggle('active',v.id===id));window.scrollTo({top:0,behavior:'smooth'})}
+$('#homeBtn').onclick=()=>show('landingView');$('#enterHouse').onclick=()=>show('floorView');$('#backHome').onclick=()=>show('floorView');$('#kitchenBack').onclick=()=>show('floorView');document.querySelectorAll('[data-back-home]').forEach(b=>b.onclick=()=>show('floorView'));$('#roomBtn').onclick=()=>show(returnView());$('#exitGame').onclick=()=>show(returnView());
+function returnView(){return currentGame==='kitchen'?'kitchenView':currentGame==='phone'?'livingView':'roomView'}
+document.querySelectorAll('.plan-choice').forEach(b=>b.onclick=()=>show(({kitchen:'kitchenView',bedroom:'roomView',living:'livingView',bath:'bathView'})[b.dataset.room]||'floorView'));
+document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>start(b.dataset.game));$('#retryBtn').onclick=()=>start(currentGame);
+function updateScore(){if(currentGame==='kitchen'){$('#scoreBoard').textContent=`쌓아둔 그릇 ${kitchenPlaced.size} / 8개`;}else if(currentGame==='phone'){$('#scoreBoard').textContent=`버틴 시간 ${Math.min(15,elapsed).toFixed(1)} / 15초`;}else{$('#scoreBoard').textContent=`쌓은 옷 ${stackCount} / 10벌`;}}
+function start(type){show('gameView');currentGame=type;running=true;elapsed=0;lastTime=0;result.classList.remove('show');
+ $('#avatar').classList.add('hidden');$('#leftBtn').classList.add('hidden');$('#rightBtn').classList.add('hidden');
+ $('#gameTitle').textContent=type==='kitchen'?'설거지 미루기의 기술':type==='phone'?'얼굴 위 핸드폰 외줄타기':'의자 위 옷 쌓기';
+ // Small game label intentionally hidden
+ if(type==='kitchen'){startKitchen()}else if(type==='phone'){startPhone()}else{startStack()}
+ updateScore();if(type!=='kitchen')raf=requestAnimationFrame(frame);
+}
+
+/* Kitchen: top-down dishes, continuous placement rather than tetromino tiles. */
+const kitchenDefs=[
+ {name:'큰 접시',type:'plate',color:'#e7ac9c',rx:43,ry:43},
+ {name:'파스타 접시',type:'plate',color:'#b2cddd',rx:39,ry:39},
+ {name:'밥그릇',type:'bowl',color:'#c6b8d9',rx:31,ry:31},
+ {name:'국그릇',type:'bowl',color:'#e6cb91',rx:34,ry:34},
+ {name:'머그컵',type:'mug',color:'#a9c8b4',rx:29,ry:25},
+ {name:'반찬 접시',type:'plate',color:'#ebbbca',rx:30,ry:30},
+ {name:'타원 접시',type:'oval',color:'#b7d8d4',rx:47,ry:23},
+ {name:'유리컵',type:'glass',color:'#c7d5e9',rx:22,ry:22}
+];
+const KX=132,KY=64,KW=256,KH=174;
+let kitchenPlaced=new Map(),kitchenSelected=0,kitchenRotation=0,kitchenPointer=null;
+function kitchenDims(id,rot){const d=kitchenDefs[id];return rot%2?[d.ry,d.rx]:[d.rx,d.ry]}
+function kitchenHit(id,x,y,rot,px,py){let dx=px-x,dy=py-y;if(rot%2)[dx,dy]=[dy,-dx];const d=kitchenDefs[id];return (dx*dx/(d.rx*d.rx)+dy*dy/(d.ry*d.ry))<=1.01}
+function kitchenValid(id,x,y,rot){const [rx,ry]=kitchenDims(id,rot);if(x-rx<KX+4||x+rx>KX+KW-4||y-ry<KY+4||y+ry>KY+KH-4)return false;
+ for(const [other,pos] of kitchenPlaced){if(other===id)continue;const box=kitchenDims(other,pos.rot);if(Math.abs(pos.x-x)>rx+box[0]+6||Math.abs(pos.y-y)>ry+box[1]+6)continue;
+  // Sample boundaries and interiors of the two dish footprints to check actual overlap.
+  for(let yy=-ry;yy<=ry;yy+=5)for(let xx=-rx;xx<=rx;xx+=5)if(kitchenHit(id,x,y,rot,x+xx,y+yy)&&kitchenHit(other,pos.x,pos.y,pos.rot,x+xx,y+yy))return false;
+  for(let yy=-box[1];yy<=box[1];yy+=5)for(let xx=-box[0];xx<=box[0];xx+=5)if(kitchenHit(other,pos.x,pos.y,pos.rot,pos.x+xx,pos.y+yy)&&kitchenHit(id,x,y,rot,pos.x+xx,pos.y+yy))return false;
+ }
+ return true;
+}
+function dishSVG(id,x,y,rot=0,extra=''){const d=kitchenDefs[id],a=rot*90;let content='';
+ if(d.type==='plate'||d.type==='oval')content=`<ellipse rx="${d.rx}" ry="${d.ry}" fill="${d.color}" stroke="#53565a" stroke-width="2.5"/><ellipse rx="${d.rx*.77}" ry="${d.ry*.77}" fill="#fffaf4" stroke="#9b9b9b" stroke-width="2"/><ellipse rx="${d.rx*.57}" ry="${d.ry*.57}" fill="none" stroke="${d.color}" stroke-width="2"/>`;
+ else if(d.type==='bowl')content=`<circle r="${d.rx}" fill="${d.color}" stroke="#53565a" stroke-width="2.5"/><circle r="${d.rx*.77}" fill="#fffaf1" stroke="#9a9995" stroke-width="2"/><circle r="${d.rx*.52}" fill="${d.color}" opacity=".42"/>`;
+ else if(d.type==='mug')content=`<circle cx="${d.rx-4}" cy="0" r="11" fill="none" stroke="#53565a" stroke-width="8"/><ellipse rx="${d.rx-6}" ry="${d.ry}" fill="${d.color}" stroke="#53565a" stroke-width="2.5"/><ellipse rx="${d.rx-12}" ry="${d.ry-6}" fill="#fffaf5" stroke="#a2a2a2" stroke-width="2"/>`;
+ else content=`<circle r="${d.rx}" fill="${d.color}" opacity=".83" stroke="#51575b" stroke-width="2.5"/><circle r="${d.rx*.76}" fill="#f8fcff" opacity=".75" stroke="#8d9cac" stroke-width="2"/><path d="M -8 -10 Q -15 0 -8 12" fill="none" stroke="white" stroke-width="4" opacity=".8"/>`;
+ return `<g transform="translate(${x} ${y}) rotate(${a})" class="dish-svg ${extra}" data-dish="${id}">${content}</g>`;
+}
+function kitchenPoint(ev){const svg=$('#dishShelf');if(!svg)return null;const r=svg.getBoundingClientRect();return{x:(ev.clientX-r.left)*520/r.width,y:(ev.clientY-r.top)*300/r.height}}
+function startKitchen(){kitchenPlaced=new Map();kitchenSelected=0;kitchenRotation=0;kitchenPointer=null;
+ $('#gameHelp').textContent='';
+ const stage=document.createElement('div');stage.className='realKitchen';stage.innerHTML=`<div class="realKitchenLayout"><div class="shelfWrap"><svg id="dishShelf" viewBox="0 0 520 300" aria-label="사용한 그릇을 쌓아 둘 싱크대"><defs><pattern id="rackLines" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M0 0 V18" stroke="#c8c8c2" stroke-width="3"/></pattern></defs><rect x="${KX-8}" y="${KY-8}" width="${KW+16}" height="${KH+16}" rx="23" fill="#a7adb2" stroke="#555" stroke-width="3"/><rect x="${KX}" y="${KY}" width="${KW}" height="${KH}" rx="15" fill="#f3f2ed" stroke="#666" stroke-width="2"/><rect x="${KX+5}" y="${KY+5}" width="${KW-10}" height="${KH-10}" rx="12" fill="url(#rackLines)"/><g id="dishLayer"></g></svg></div><div class="dishSidebar"><div id="dishTray" class="dishTray"></div></div></div><div class="kpControls"><button type="button" class="smallbtn" id="kpRotate" aria-label="그릇 회전" title="그릇 회전 (R / 스페이스)">↻</button><button type="button" class="smallbtn" id="kpUndo">↶ 마지막 그릇 꺼내기</button><button type="button" class="smallbtn" id="kpReset">다시 쌓기</button></div><div class="kpMsg" id="kpMsg" aria-live="polite"></div>`;
+ area.appendChild(stage);$('#leftBtn').classList.add('hidden');$('#rightBtn').classList.add('hidden');
+ $('#kpRotate').onclick=rotateKitchen;$('#kpUndo').onclick=()=>{const ids=[...kitchenPlaced.keys()];if(ids.length){const id=ids[ids.length-1];kitchenPlaced.delete(id);kitchenSelected=id;kitchenRotation=0;renderKitchen()}};
+ $('#kpReset').onclick=()=>{kitchenPlaced.clear();kitchenSelected=0;kitchenRotation=0;renderKitchen()};
+ const svg=$('#dishShelf');svg.addEventListener('pointerdown',e=>{const p=kitchenPoint(e),g=e.target.closest('[data-dish]');let id=kitchenSelected;
+  if(g){id=Number(g.dataset.dish);const old=kitchenPlaced.get(id);kitchenPlaced.delete(id);kitchenSelected=id;kitchenRotation=old?.rot||0;renderKitchen()}
+  if(id===null)return;kitchenPointer={id,start:p,moved:false};svg.setPointerCapture(e.pointerId);previewKitchen(p.x,p.y);
+ });
+ svg.addEventListener('pointermove',e=>{const p=kitchenPoint(e);if(!p)return;if(kitchenPointer){if(Math.hypot(p.x-kitchenPointer.start.x,p.y-kitchenPointer.start.y)>4)kitchenPointer.moved=true}previewKitchen(p.x,p.y)});
+ svg.addEventListener('pointerup',e=>{if(!kitchenPointer)return;const p=kitchenPoint(e);kitchenPointer=null;placeKitchen(p.x,p.y)});
+ svg.addEventListener('pointerleave',()=>{if(!kitchenPointer)renderKitchen()});renderKitchen();
+}
+function selectKitchen(id){if(kitchenPlaced.has(id))kitchenPlaced.delete(id);kitchenSelected=id;kitchenRotation=0;renderKitchen()}
+function rotateKitchen(){if(!running||currentGame!=='kitchen'||kitchenSelected===null)return;kitchenRotation=(kitchenRotation+1)%4;renderKitchen()}
+function placeKitchen(x,y){if(kitchenSelected===null)return;const id=kitchenSelected;if(!kitchenValid(id,x,y,kitchenRotation)){$('#kpMsg').textContent='그릇이 겹쳐요!';previewKitchen(x,y);return}
+ kitchenPlaced.set(id,{x,y,rot:kitchenRotation});kitchenSelected=kitchenDefs.findIndex((_,i)=>!kitchenPlaced.has(i));if(kitchenSelected<0)kitchenSelected=null;kitchenRotation=0;renderKitchen();if(kitchenPlaced.size===kitchenDefs.length)end(true);
+}
+function previewKitchen(x,y){if(kitchenSelected===null)return;const layer=$('#dishLayer');if(!layer)return;renderDishLayer();const valid=kitchenValid(kitchenSelected,x,y,kitchenRotation);layer.insertAdjacentHTML('beforeend',`<g opacity="${valid?.7:.35}" style="pointer-events:none">${dishSVG(kitchenSelected,x,y,kitchenRotation)}</g>`)}
+function renderDishLayer(){const layer=$('#dishLayer');if(layer)layer.innerHTML=[...kitchenPlaced].map(([id,p])=>dishSVG(id,p.x,p.y,p.rot)).join('')}
+function renderKitchen(){const tray=$('#dishTray');if(!tray)return;renderDishLayer();tray.innerHTML='';kitchenDefs.forEach((d,id)=>{const btn=document.createElement('button');btn.type='button';btn.className='realDishButton'+(kitchenSelected===id?' selected':'')+(kitchenPlaced.has(id)?' placed':'');btn.innerHTML=`<svg viewBox="-60 -60 120 120" aria-hidden="true">${dishSVG(id,0,0,0)}</svg><span>${d.name}</span>`;btn.onclick=()=>selectKitchen(id);tray.appendChild(btn)});
+ $('#kpMsg').textContent=kitchenSelected===null?'완료!':`${kitchenDefs[kitchenSelected].name} 선택 · 배치하기 (${kitchenPlaced.size}/${kitchenDefs.length})`;updateScore();
+}
+function startStack(){stackCount=0;stackPieces=[];stackDir=1;stackSpeed=125;stackMoving=true;
+ $('#gameHelp').innerHTML='스페이스바: 옷 떨어뜨리기 · 10벌 쌓기';
+ const stage=document.createElement('div');stage.className='stackStage';stage.innerHTML='<div class="ground"></div><div class="stackChair"><div class="backrest"></div><div class="seat"></div><div class="leg one"></div><div class="leg two"></div></div><div class="stackMessage" id="stackMessage">스페이스바로 떨어뜨리기</div><div class="stackTarget" id="stackTarget"></div>';
+ area.appendChild(stage);const btn=$('#leftBtn');btn.textContent='옷 떨어뜨리기 (SPACE)';btn.classList.remove('hidden');btn.classList.add('stackDrop');
+ $('#rightBtn').classList.add('hidden');
+ const h=stage.clientHeight,w=stage.clientWidth;const chair=stage.querySelector('.stackChair');chair.style.left=w/2+'px';chair.style.bottom=(h*.18-5)+'px';
+ makeNextGarment();
+}
+function makeNextGarment(){if(!running||currentGame!=='clothes')return;const stage=$('.stackStage'),w=stage.clientWidth,h=stage.clientHeight;
+ stackWidth=Math.max(78,105-stackCount*1.3);stackX=(w-stackWidth)/2-90;stackDir=1;stackSpeed=215+stackCount*20;stackMoving=true;
+ const colors=['#f6b6b0','#d9e5a5','#c7c2f5','#9fd8dc','#f7d794','#d8b7d8','#bed0ef','#d9e0b3','#f1c9af','#b7cdd4'];
+ const el=document.createElement('div');el.className='stackGarment active';el.style.width=stackWidth+'px';el.style.background=colors[stackCount%colors.length];stage.appendChild(el);
+ const top=Math.max(30,88-stackCount*5);el.style.top=top+'px';el.style.left=stackX+'px';el.dataset.top=top;
+ const guide=$('#stackTarget');guide.style.width=stackWidth+'px';guide.style.left=(w-stackWidth)/2+'px';guide.style.top=(h*.82-43-stackCount*19-3)+'px';
+ $('#stackMessage').textContent=`${stackCount+1} / 10`;
+}
+function dropGarment(){if(!running||currentGame!=='clothes'||!stackMoving)return;
+ stackMoving=false;const stage=$('.stackStage'),el=stage.querySelector('.stackGarment.active');if(!el)return;
+ const w=stage.clientWidth,h=stage.clientHeight;const center=stackX+stackWidth/2;
+ const target=stackCount===0?w/2:stackPieces[stackPieces.length-1].center;
+ const offset=Math.abs(center-target);
+ const allowable=stackCount===0?48:Math.max(26,45-stackCount*1.4);
+ const y=h*.82-43-stackCount*19-19;
+ el.style.transition='top .32s ease-in';el.style.top=y+'px';
+ if(offset>allowable){el.style.transform=`rotate(${center<target?-34:34}deg) translateY(58px)`;el.style.opacity='.5';$('#stackMessage').textContent='앗! 중심을 벗어나 옷더미가 무너졌어요!';stackTransition=setTimeout(()=>end(false),620);return;}
+ stackPieces.push({center,width:stackWidth});stackCount++;el.classList.remove('active');
+ el.style.transform=`rotate(${(center-target)*.07}deg)`;updateScore();
+ if(stackCount>=10){$('#stackMessage').textContent='10벌 성공! 완벽한 옷 탑!';stackTransition=setTimeout(()=>end(true),550);return;}
+ $('#stackMessage').textContent=`${stackCount} / 10`;
+ stackTransition=setTimeout(()=>{stackTransition=null;makeNextGarment()},540);
+}
+function frame(t){if(!running)return;if(!lastTime)lastTime=t;const dt=Math.min((t-lastTime)/1000,.05);lastTime=t;elapsed+=dt;
+ if(currentGame==='phone'){updatePhone(dt);if(!running)return;updateScore()}else if(stackMoving){const el=$('.stackGarment.active');if(el){const w=$('.stackStage').clientWidth;stackX+=stackDir*stackSpeed*dt;const minX=(w-stackWidth)/2-90,maxX=(w-stackWidth)/2+90;if(stackX<minX){stackX=minX;stackDir=1}if(stackX>maxX){stackX=maxX;stackDir=-1}el.style.left=stackX+'px'}}
+ raf=requestAnimationFrame(frame);
+}
+function end(success){running=false;cancelAnimationFrame(raf);
+ const messages={
+  clothes:success?'엄마, 직접 해보니까 알겠지? 의자에 옷 안 무너지게 쌓는 것도 실력이라니까!':'엄마, 옷 쌓다가 무너졌지? 나도 아무렇게나 쌓아두는 게 아니라니까!',
+  kitchen:success?'엄마, 직접 해보니 알겠지? 설거지 미룰 때도 그릇 쌓는 기술이 필요하다니까!':'엄마, 그릇 8개 넣는 것도 쉽지 않지? 내가 괜히 쌓아두는 게 아니라니까!',
+  phone:success?'엄마, 직접 해보니까 알겠지? 누워서 핸드폰 안 떨어뜨리고 보는 것도 얼마나 어려운지!':'엄마, 핸드폰 떨어뜨렸지? 누워서 얼굴에 안 떨어뜨리고 보는 것도 실력이라니까!'
+ };
+ if(currentGame==='phone'){$('#resultTitle').textContent=success?'성공!':'떨어졌다!';}
+ else if(currentGame==='kitchen'){$('#resultTitle').textContent=success?'성공!':'다시 도전!';}
+ else{$('#resultTitle').textContent=success?'성공!':'와르르!';}
+ $('#resultText').textContent=messages[currentGame]||'엄마, 이것도 다 실력이라니까!';
+ result.classList.add('show');}
+
+/* PHONE: fight unpredictable tilting with your pointer position. */
+let phoneAngle=0,phoneVelocity=0,phonePointerX=0.5,phoneTime=0,phoneDrop=0,phoneJerk=0;
+function startPhone(){gameDuration=15;phoneAngle=0;phoneVelocity=0;phonePointerX=.5;phoneTime=0;phoneDrop=0;phoneJerk=0;
+ $('#gameHelp').textContent='← 마우스 →';
+ const st=document.createElement('div');st.className='phoneStage phoneNewStage';
+ st.innerHTML=`<div class="phoneStatus" id="phoneStatus">15.0초</div><div class="phoneDanger" id="phoneDanger">떨어진다!</div>
+ <svg class="phoneArtwork" viewBox="0 0 850 470" preserveAspectRatio="xMidYMid meet" role="img" aria-label="얼굴 위에서 균형을 잡는 핸드폰. 단순한 흑백 그래픽">
+  <!-- Only three objects: pillow, face, phone -->
+  <rect x="276" y="248" width="298" height="150" rx="18" fill="#ebebeb" stroke="#111" stroke-width="5"/>
+  <ellipse cx="425" cy="299" rx="101" ry="83" fill="white" stroke="#111" stroke-width="5"/>
+  <path d="M348 265 Q357 257 372 265 M476 265 Q491 257 502 265" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  <path d="M410 316 Q425 327 440 316" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  <ellipse id="fallShadow" cx="425" cy="286" rx="40" ry="17" fill="#888" opacity=".17"/>
+  <g id="phoneFalling" transform="translate(425 125)">
+   <rect x="-48" y="-73" width="96" height="146" rx="13" fill="#111"/>
+   <rect x="-41" y="-65" width="82" height="130" rx="8" fill="white"/>
+   <rect x="-12" y="-58" width="24" height="4" rx="2" fill="#111"/>
+   <circle cx="0" cy="51" r="5" fill="#aaa"/>
+  </g>
+ </svg>
+ <div class="phoneMeter"><div class="phoneMarker" id="phoneMarker"></div></div>`;
+ area.appendChild(st);
+ const move=e=>{const r=st.getBoundingClientRect();phonePointerX=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))};
+ st.addEventListener('pointermove',move);st.addEventListener('pointerdown',e=>{st.setPointerCapture(e.pointerId);move(e)});
+}
+function updatePhone(dt){
+ phoneTime+=dt;
+ const difficulty=1+Math.min(1.25,elapsed/17);
+ if(Math.random()<dt*(2.8+difficulty*1.8))phoneJerk+=(Math.random()>.5?1:-1)*(16+Math.random()*21)*difficulty;
+ phoneJerk*=Math.max(.5,1-dt*4.7);
+ const drift=(Math.sin(phoneTime*3.6)*12+Math.sin(phoneTime*7.2)*7+Math.sin(phoneTime*1.35)*10)*difficulty;
+ const userForce=(phonePointerX-.5)*205;
+ phoneVelocity+=(drift+phoneJerk+userForce-phoneAngle*.31-phoneVelocity*1.2)*dt;
+ phoneAngle+=phoneVelocity*dt;
+ const danger=Math.min(1,Math.abs(phoneAngle)/43);
+ phoneDrop=8+danger*92;
+ $('#phoneFalling')?.setAttribute('transform',`translate(${425+phoneAngle*.28} ${125+phoneDrop}) rotate(${phoneAngle*1.05} 0 0)`);
+ $('#fallShadow')?.setAttribute('opacity',String(.16+danger*.28));
+ $('#phoneMarker').style.left=`${Math.max(0,Math.min(100,50+phoneAngle*.95))}%`;
+ $('#phoneDanger').style.opacity=danger>.68?1:0;
+ $('#phoneStatus').textContent=`${Math.max(0,15-elapsed).toFixed(1)}초`;
+ if(Math.abs(phoneAngle)>43){end(false);return}
+ if(elapsed>=15){end(true);return}
+}
+window.addEventListener('keydown',e=>{if(!running||e.code!=='Space')return;e.preventDefault();if(e.repeat)return;if(currentGame==='kitchen')rotateKitchen();else if(currentGame==='clothes')dropGarment()});
+window.addEventListener('keydown',e=>{if(running&&currentGame==='kitchen'&&(e.key==='r'||e.key==='R')){e.preventDefault();rotateKitchen()}});
+$('#leftBtn').addEventListener('click',()=>{if(currentGame==='clothes')dropGarment()});
+area.addEventListener('pointerdown',e=>{if(currentGame==='clothes'&&running&&!e.target.closest('button'))dropGarment()});
+</script></body></html>
